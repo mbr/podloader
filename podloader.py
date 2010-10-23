@@ -33,8 +33,9 @@ if not len(args) == 2:
 
 targetdir, url = args
 
+logfile = file(opts.logfile, 'w')
 logging.basicConfig(level = logging.INFO if not opts.debug else logging.DEBUG,
-                    filename = opts.logfile)
+                    stream = logfile)
 
 intervals = {
 	's': 1,
@@ -98,7 +99,7 @@ if '__main__' == __name__:
 		debug('umask now %o, from %o', umask, old_umask)
 	try:
 		if not opts.foreground:
-			with daemon.DaemonContext():
+			with daemon.DaemonContext(files_preserve = [logfile]):
 				debug('daemonized')
 				main(ival)
 		else:
