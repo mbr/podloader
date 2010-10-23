@@ -3,7 +3,6 @@
 
 import optparse
 import daemon
-import dateutil.rrule
 import logging
 import sys
 import feedparser
