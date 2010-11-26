@@ -83,7 +83,10 @@ def main(ival):
 					debug('skipping, %s exists', filepath)
 				else:
 					info('%s: downloading %s to %s', e['title'], encl['url'], filepath)
-					urllib.urlretrieve(encl['url'], filepath)
+					try:
+						urllib.urlretrieve(encl['url'], filepath)
+					except IOError, e:
+						error('download of %s failed, skipping this time: %s', encl['url'], e)
 					info('finished downloading')
 
 		debug('done, sleeping')
